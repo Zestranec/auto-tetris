@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auto-Tetris — Betting Game</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <!-- Round-end popup overlay (win / lose) -->
+    <div id="round-popup" class="round-popup hidden">
+      <div class="popup-card">
+        <div class="popup-title" id="popup-title"></div>
+        <div class="popup-message" id="popup-message"></div>
+        <button class="popup-btn" id="popup-btn">Play</button>
+      </div>
+    </div>
+
+    <div id="app">
+      <!-- Left: PixiJS canvas -->
+      <div id="canvas-container"></div>
+
+      <!-- Right: HTML UI panel -->
+      <div id="ui-panel">
+        <h1 class="game-title">AUTO TETRIS</h1>
+
+        <!-- Economy -->
+        <div class="ui-section">
+          <div class="stat-row">
+            <span class="stat-label">Balance</span>
+            <span class="stat-value" id="ui-balance">1000 FUN</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Status</span>
+            <span class="stat-value status-badge" id="ui-status">Ready</span>
+          </div>
+        </div>
+
+        <!-- Block selection -->
+        <div class="ui-section">
+          <div class="section-title">BLOCKS (BET = BLOCKS × 1 FUN)</div>
+          <div class="bet-buttons">
+            <button class="bet-btn active" data-blocks="30">30 blocks</button>
+            <button class="bet-btn" data-blocks="50">50 blocks</button>
+            <button class="bet-btn" data-blocks="75">75 blocks</button>
+          </div>
+          <div class="prob-note" id="ui-bet-preview">Bet: 30 FUN</div>
+        </div>
+
+        <!-- Round stats -->
+        <div class="ui-section">
+          <div class="section-title">ROUND STATS</div>
+          <div class="stat-row">
+            <span class="stat-label">Blocks</span>
+            <span class="stat-value" id="ui-blocks">0 / 30</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Lines Cleared</span>
+            <span class="stat-value" id="ui-lines">0</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Round Payout</span>
+            <span class="stat-value" id="ui-payout">0.00 FUN</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Net P/L</span>
+            <span class="stat-value" id="ui-net">0.00 FUN</span>
+          </div>
+        </div>
+
+        <!-- Win probability -->
+        <div class="ui-section">
+          <div class="section-title">WIN PROBABILITY</div>
+          <div class="win-prob-buttons">
+            <button class="prob-btn" data-prob="0.1">10%</button>
+            <button class="prob-btn" data-prob="0.3">30%</button>
+            <button class="prob-btn active" data-prob="0.5">50%</button>
+            <button class="prob-btn" data-prob="0.7">70%</button>
+            <button class="prob-btn" data-prob="0.9">90%</button>
+          </div>
+          <div class="prob-note">
+            Win = clear ≥5 lines
+          </div>
+        </div>
+
+        <!-- RNG seed -->
+        <div class="ui-section">
+          <div class="section-title">RNG SEED</div>
+          <div class="seed-row">
+            <input type="number" id="ui-seed" value="42" min="0" max="4294967295" />
+            <button id="btn-random-seed">🎲</button>
+          </div>
+          <label class="seed-lock-row">
+            <input type="checkbox" id="ui-seed-lock" />
+            Lock seed (don't auto-generate on Play)
+          </label>
+        </div>
+
+        <!-- Control buttons -->
+        <div class="ui-section">
+          <button class="control-btn primary" id="btn-start">▶ START ROUND</button>
+          <button class="control-btn speedup" id="btn-speedup" style="display:none">
+            ROUND SPEEDUP &gt;&gt;&gt;
+          </button>
+          <button class="control-btn secondary" id="btn-simulate">
+            Run 100 Sim
+          </button>
+        </div>
+
+        <!-- Simulation results -->
+        <div class="ui-section" id="sim-results" style="display:none">
+          <div class="section-title">SIMULATION</div>
+          <div id="sim-output" class="sim-output"></div>
+        </div>
+
+        <!-- Debug toggle -->
+        <div class="ui-section debug-row">
+          <label>
+            <input type="checkbox" id="ui-debug" />
+            Debug logging
+          </label>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

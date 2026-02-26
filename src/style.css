@@ -1,0 +1,427 @@
+/* ============================================================
+   Auto-Tetris — Global styles
+   ============================================================ */
+
+:root {
+  --bg:          #0a0a18;
+  --panel-bg:    #10101e;
+  --border:      #1e2a4a;
+  --accent:      #3366cc;
+  --accent-hot:  #5588ff;
+  --text:        #c8d4f0;
+  --text-dim:    #556688;
+  --win:         #44cc88;
+  --lose:        #cc4444;
+  --panel-width: 280px;
+  --gap:         12px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: var(--text);
+  font-size: 14px;
+}
+
+/* ── Layout ────────────────────────────────────────────────── */
+
+#app {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--gap);
+  padding: 16px;
+  height: 100vh;
+}
+
+#canvas-container {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+}
+
+#canvas-container canvas {
+  display: block;
+  image-rendering: pixelated;
+  border: 2px solid var(--border);
+  border-radius: 4px;
+}
+
+/* ── Side panel ─────────────────────────────────────────────── */
+
+#ui-panel {
+  width: var(--panel-width);
+  min-width: var(--panel-width);
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.game-title {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  text-align: center;
+  color: var(--accent-hot);
+  text-shadow: 0 0 18px #3366cc88;
+  padding: 4px 0 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Section card ───────────────────────────────────────────── */
+
+.ui-section {
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+/* ── Stat rows ──────────────────────────────────────────────── */
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-label {
+  color: var(--text-dim);
+  font-size: 13px;
+}
+
+.stat-value {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.stat-value.positive { color: var(--win); }
+.stat-value.negative { color: var(--lose); }
+
+/* ── Status badge ───────────────────────────────────────────── */
+
+.status-badge {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.status-ready    { background: #223; color: #88aaff; }
+.status-running  { background: #132813; color: #66ee88; }
+.status-gameover { background: #2a1010; color: #ff6666; }
+.status-finished { background: #1a2810; color: #aaff66; }
+
+/* ── Bet buttons ────────────────────────────────────────────── */
+
+.bet-buttons,
+.win-prob-buttons {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.bet-btn,
+.prob-btn {
+  flex: 1;
+  padding: 7px 4px;
+  background: #181830;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-dim);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.bet-btn:hover,
+.prob-btn:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.bet-btn.active,
+.prob-btn.active {
+  background: var(--accent);
+  border-color: var(--accent-hot);
+  color: #fff;
+  box-shadow: 0 0 10px #3366cc55;
+}
+
+.prob-note {
+  font-size: 11px;
+  color: var(--text-dim);
+  text-align: center;
+  margin-top: -2px;
+}
+
+/* ── Seed input ─────────────────────────────────────────────── */
+
+.seed-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.seed-row input {
+  flex: 1;
+  padding: 6px 8px;
+  background: #181830;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 13px;
+  outline: none;
+}
+
+.seed-row input:focus {
+  border-color: var(--accent);
+}
+
+.seed-row button {
+  padding: 6px 10px;
+  background: #181830;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 16px;
+  transition: border-color 0.15s;
+}
+
+.seed-row button:hover {
+  border-color: var(--accent);
+}
+
+.seed-lock-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  color: var(--text-dim);
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+.seed-lock-row input[type='checkbox'] {
+  accent-color: var(--accent);
+  width: 13px;
+  height: 13px;
+}
+
+/* ── Control buttons ────────────────────────────────────────── */
+
+.control-btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: none;
+}
+
+.control-btn.primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 0 14px #3366cc44;
+}
+
+.control-btn.primary:hover:not(:disabled) {
+  background: var(--accent-hot);
+  box-shadow: 0 0 20px #5588ff66;
+}
+
+.control-btn.primary:disabled {
+  background: #1a2040;
+  color: var(--text-dim);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.control-btn.secondary {
+  background: #181830;
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  font-size: 12px;
+  padding: 8px;
+}
+
+.control-btn.secondary:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.control-btn.speedup {
+  background: #1a1a10;
+  color: #ccaa22;
+  border: 1px solid #443300;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 9px;
+  transition: all 0.15s;
+}
+
+.control-btn.speedup:hover {
+  border-color: #aa8800;
+  color: #ffcc44;
+}
+
+.control-btn.speedup.speedup-active {
+  background: #221a00;
+  border-color: #ffcc44;
+  color: #ffdd66;
+  box-shadow: 0 0 10px #ffcc4444;
+}
+
+/* ── Simulation output ──────────────────────────────────────── */
+
+.sim-output {
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--text-dim);
+}
+
+.sim-output b {
+  color: var(--text);
+}
+
+/* ── Debug toggle ───────────────────────────────────────────── */
+
+.debug-row {
+  padding: 6px 12px;
+}
+
+.debug-row label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: var(--text-dim);
+  font-size: 12px;
+}
+
+.debug-row input[type='checkbox'] {
+  accent-color: var(--accent);
+  width: 14px;
+  height: 14px;
+}
+
+/* ── Round-end popup ────────────────────────────────────────── */
+
+.round-popup {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 10, 0.72);
+  z-index: 9999;
+  animation: popup-fade-in 0.18s ease;
+}
+
+.round-popup.hidden {
+  display: none;
+}
+
+@keyframes popup-fade-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.popup-card {
+  background: #10101e;
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: 32px 36px 28px;
+  min-width: 320px;
+  max-width: 90vw;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 0 40px rgba(0, 0, 40, 0.8);
+}
+
+.popup-card.popup-win {
+  border-color: #44cc88;
+  box-shadow: 0 0 40px rgba(40, 180, 100, 0.25);
+}
+
+.popup-card.popup-lose {
+  border-color: #cc4444;
+  box-shadow: 0 0 40px rgba(180, 40, 40, 0.25);
+}
+
+.popup-title {
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.popup-win .popup-title  { color: #44ff99; }
+.popup-lose .popup-title { color: #ff5555; }
+
+.popup-message {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-dim);
+}
+
+.popup-btn {
+  margin-top: 6px;
+  padding: 11px 28px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s;
+}
+
+.popup-win  .popup-btn { background: #44cc88; color: #001a0a; }
+.popup-lose .popup-btn { background: #cc4444; color: #fff; }
+
+.popup-win  .popup-btn:hover { background: #55ffaa; }
+.popup-lose .popup-btn:hover { background: #ff5555; }
+
+/* ── Scrollbar ──────────────────────────────────────────────── */
+
+#ui-panel::-webkit-scrollbar {
+  width: 4px;
+}
+#ui-panel::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}

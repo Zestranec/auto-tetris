@@ -74,7 +74,7 @@ async function main(): Promise<void> {
   resizeCanvas();
 
   // Expose to browser console for quick experiments
-  (window as unknown as Record<string, unknown>)['game'] = game;
+  (window as any).game = game;;
 }
 
 main().catch(err => {
